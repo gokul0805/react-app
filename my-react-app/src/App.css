@@ -1,0 +1,126 @@
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  
+  
+}
+
+
+
+
+.hero-section {
+  min-height: 100vh;
+  width: 100vw;
+  
+  color: rgb(241, 239, 239);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  margin: 0;
+  
+}
+
+
+.hero-section h1 {
+  font-size: 3rem;
+}
+
+.hero-section p {
+  font-size: 1.25rem;
+  margin-top: 1rem;
+}
+
+
+.container {
+  max-width: 100%;
+  padding: 0 2rem;
+}
+
+
+.about-section {
+  background-color: #121212 !important;
+  color: #ffffff !important;
+  padding: 4rem 1rem;
+  text-align: center;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.about-section h2 {
+  color: #ffffff !important;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.about-section p {
+  color: #ffffff !important;
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.carousel-wrapper {
+  margin-top: 30px;
+}
+
+.carousel .slide img {
+  max-height: 250px;
+  object-fit: contain;
+}
+
+.carousel .legend {
+  display: none; 
+}
+
+.carousel .slide h3 {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+.carousel .slide p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #ddd;
+}
+
+.services-section {
+  background-color: #f4efef !important;
+  color: #100202 !important;
+  padding: 4rem 1rem;
+  text-align: center;
+   min-height: 100vh;
+  width: 100%;
+}
+.services-section h2 {
+  color: #110101 !important;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.services-section p {
+  color: #060101 !important;
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+.para {
+padding-bottom: 20px;
+}
+.team-section {
+  background-color: #161313 !important;
+  color: #f6f4f4e4 !important;
+  padding: 4rem 1rem;
+  text-align: center;
+  height: 100vh;
+  width: 100%;
+}
