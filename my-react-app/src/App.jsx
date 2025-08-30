@@ -188,7 +188,7 @@ function App() {
           </p>
           <div className="row justify-content-center">
             <div className="col-md-8 col-lg-6">
-              <form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm bg-light">
+              <form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm bg-light" >
                 <div className="mb-3">
                   <input
                     type="text"
