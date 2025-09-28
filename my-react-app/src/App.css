@@ -96,54 +96,46 @@ html,
 /* Service Cards Styling */
 .services-carousel-container {
   position: relative;
-  height: 480px;
+  height: 420px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1.25rem 0 0 0;
-  margin-top: 1.25rem;
+  margin: 2rem 0 0 0;
+  margin-top: 2rem;
   overflow: hidden;
   perspective: 1000px;
   perspective-origin: center center;
+  cursor: pointer;
 }
 
-/* Sticky scroll section for services */
-.services-scrollspace {
-  height: 500vh; /* extended: more scroll time before next page */
-  position: relative;
-}
-
-.services-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
 
 .service-card-carousel {
-  width: 260px;
-  height: 260px;
+  width: 220px;
+  height: 240px;
   will-change: transform, opacity, z-index;
-  transition: transform 0.1s ease-out, opacity 0.2s ease-out;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-out;
   transform-style: preserve-3d;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -130px;
-  margin-left: -130px;
+  margin-top: -120px;
+  margin-left: -110px;
 }
 
 .service-card {
   transition: box-shadow 0.3s ease;
-  background-color: #1a1a1a !important;
-  border: 1px solid #333 !important;
-  color: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e0e0e0 !important;
+  color: #333333 !important;
   will-change: transform;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem;
+  margin: 0.5rem;
 }
 
 .service-card:hover {
@@ -179,20 +171,34 @@ html,
 }
 
 .service-card h5 {
-  color: #ffffff !important;
+  color: #000000 !important;
   font-weight: bold;
+  font-size: 0.95rem;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+  line-height: 1.2;
+  flex-shrink: 0;
 }
 
 .service-card p {
-  color: #d0d0d0 !important;
-  font-size: 0.85rem;
-  line-height: 1.4;
+  color: #555555 !important;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  margin: 0;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.25rem;
 }
 
 .service-image {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
 }
 
 .service-image img {
@@ -200,10 +206,98 @@ html,
   transition: transform 0.3s ease;
   display: block;
   margin: 0 auto;
+  width: 100%;
+  height: 70px;
+  object-fit: cover;
 }
 
 .service-card:hover .service-image img {
   transform: scale(1.05);
+}
+
+/* Carousel Controls */
+.carousel-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.carousel-controls .btn {
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+}
+
+.carousel-controls .btn:hover {
+  background: rgba(112, 46, 187, 0.8);
+  border-color: #702ebb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(112, 46, 187, 0.3);
+}
+
+.carousel-controls .btn:active {
+  transform: translateY(0);
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+
+.indicator.active {
+  background: #702ebb;
+  box-shadow: 0 0 15px rgba(112, 46, 187, 0.6);
+  transform: scale(1.3);
+}
+
+.indicator.active::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid rgba(112, 46, 187, 0.3);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
 /* Accessibility: reduced motion preference */
@@ -214,6 +308,13 @@ html,
   .service-card,
   .service-image img {
     transition: none;
+  }
+  .carousel-controls .btn,
+  .indicator {
+    transition: none;
+  }
+  .indicator.active::after {
+    animation: none;
   }
 }
 
@@ -228,30 +329,71 @@ html,
     line-height: 1.6;
   }
   .services-carousel-container {
-    height: 360px;
-    margin-top: 0.5rem;
+    height: 340px;
+    margin-top: 1rem;
   }
   .service-card-carousel {
-    width: 80vw;
-    height: 220px;
-    margin-left: calc(-40vw);
-    margin-top: -110px;
+    width: 75vw;
+    max-width: 200px;
+    height: 200px;
+    margin-left: calc(-37.5vw);
+    margin-top: -100px;
   }
   .service-card {
     border-width: 1px !important;
   }
   .service-card h5 {
-    font-size: 1rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
   }
   .service-card p {
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.65rem;
+    line-height: 1.2;
+    padding-top: 0.2rem;
   }
+  .service-image {
+    margin-bottom: 0.5rem;
+  }
+  .service-image img {
+    height: 60px;
+  }
+  
+  /* Mobile carousel controls */
+  .carousel-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .carousel-controls .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    width: 120px;
+  }
+  
+  .carousel-indicators {
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .indicator {
+    width: 10px;
+    height: 10px;
+  }
+  
   /* Disable hover effects on touch */
   .service-card:hover,
   .service-card:hover .service-image img {
     transform: none;
     box-shadow: none !important;
+  }
+  
+  .carousel-controls .btn:hover {
+    transform: none;
+  }
+  
+  .indicator:hover {
+    transform: none;
   }
 }
 

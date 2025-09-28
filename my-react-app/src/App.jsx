@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { FaInstagram, FaLinkedin } from 'react-icons/fa';
-import useScrollRotation from './useScrollRotation';
+import useCarousel from './useCarousel';
 
 function App() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -19,11 +19,18 @@ function App() {
     ['#03010aff', '#702ebbff']
   );
 
-  // Rotation hooks for each service card
-  const { rotation: rotation1, cardPosition: pos1 } = useScrollRotation(0);
-  const { rotation: rotation2, cardPosition: pos2 } = useScrollRotation(1);
-  const { rotation: rotation3, cardPosition: pos3 } = useScrollRotation(2);
-  const { rotation: rotation4, cardPosition: pos4 } = useScrollRotation(3);
+  // Carousel hook for service cards
+  const {
+    currentIndex,
+    isPlaying,
+    goToNext,
+    goToPrevious,
+    goToSlide,
+    togglePlayPause,
+    pauseCarousel,
+    resumeCarousel,
+    getCardPosition,
+  } = useCarousel(4, 4000); // 4 cards, 4 second intervals
 
   
   const handleChange = (e) => {
@@ -173,25 +180,47 @@ function App() {
       
       <section id="services" className="services-section py-5">
         <div className="container-fluid text-center">
-          <div id="servicesScroll" className="services-scrollspace">
-            <div className="services-sticky">
-              <ScrollFadeIn>
-              <h2 className="mb-4">Our Services</h2></ScrollFadeIn>
-              
-              <ScrollFadeIn delay={0.2}>
-              <p className="text-muted fs-5 mx-auto mb-5" style={{ maxWidth: '800px' }}>
-                Explore our range of services built to support your creative and technical goals.
-              </p>
-              </ScrollFadeIn>
+          <ScrollFadeIn>
+            <h2 className="mb-4">Our Services</h2>
+          </ScrollFadeIn>
+          
+          <ScrollFadeIn delay={0.2}>
+            <p className="text-muted fs-5 mx-auto mb-5" style={{ maxWidth: '800px' }}>
+              Explore our range of services built to support your creative and technical goals.
+            </p>
+          </ScrollFadeIn>
 
-              <div className="services-carousel-container">
+          {/* Carousel Controls */}
+          <div className="carousel-controls mb-4">
+            <button 
+              className="btn btn-outline-light me-3" 
+              onClick={goToPrevious}
+              aria-label="Previous service"
+            >
+              ← 
+            </button>
+          
+            <button 
+              className="btn btn-outline-light" 
+              onClick={goToNext}
+              aria-label="Next service"
+            >
+               →
+            </button>
+          </div>
+
+          {/* Service Cards Carousel */}
+          <div 
+            className="services-carousel-container"
+
+          >
             {/* Custom 3D Printing Service */}
             <div 
-              className={`service-card-carousel ${pos1.isVisible ? 'active' : ''}`}
+              className={`service-card-carousel ${getCardPosition(0).isActive ? 'active' : ''}`}
               style={{ 
-                transform: `translate3d(${pos1.x}px, ${pos1.y}px, ${pos1.z || 0}px) scale(${pos1.scale || 1}) rotateY(${pos1.rotateY || 0}deg)`,
-                opacity: pos1.opacity || 1,
-                zIndex: pos1.isVisible ? 10 : 1
+                transform: `translate3d(${getCardPosition(0).x}px, ${getCardPosition(0).y}px, ${getCardPosition(0).z}px) scale(${getCardPosition(0).scale}) rotateY(${getCardPosition(0).rotateY}deg)`,
+                opacity: getCardPosition(0).opacity,
+                zIndex: getCardPosition(0).isActive ? 10 : 1
               }}
             >
               <div className="service-card h-100 p-4 border rounded shadow-sm bg-light">
@@ -212,11 +241,11 @@ function App() {
 
             {/* PCB Design & Fabrication Service */}
             <div 
-              className={`service-card-carousel ${pos2.isVisible ? 'active' : ''}`}
+              className={`service-card-carousel ${getCardPosition(1).isActive ? 'active' : ''}`}
               style={{ 
-                transform: `translate3d(${pos2.x}px, ${pos2.y}px, ${pos2.z || 0}px) scale(${pos2.scale || 1}) rotateY(${pos2.rotateY || 0}deg)`,
-                opacity: pos2.opacity || 1,
-                zIndex: pos2.isVisible ? 10 : 1
+                transform: `translate3d(${getCardPosition(1).x}px, ${getCardPosition(1).y}px, ${getCardPosition(1).z}px) scale(${getCardPosition(1).scale}) rotateY(${getCardPosition(1).rotateY}deg)`,
+                opacity: getCardPosition(1).opacity,
+                zIndex: getCardPosition(1).isActive ? 10 : 1
               }}
             >
               <div className="service-card h-100 p-4 border rounded shadow-sm bg-light">
@@ -237,11 +266,11 @@ function App() {
 
             {/* IoT & Embedded Systems Service */}
             <div 
-              className={`service-card-carousel ${pos3.isVisible ? 'active' : ''}`}
+              className={`service-card-carousel ${getCardPosition(2).isActive ? 'active' : ''}`}
               style={{ 
-                transform: `translate3d(${pos3.x}px, ${pos3.y}px, ${pos3.z || 0}px) scale(${pos3.scale || 1}) rotateY(${pos3.rotateY || 0}deg)`,
-                opacity: pos3.opacity || 1,
-                zIndex: pos3.isVisible ? 10 : 1
+                transform: `translate3d(${getCardPosition(2).x}px, ${getCardPosition(2).y}px, ${getCardPosition(2).z}px) scale(${getCardPosition(2).scale}) rotateY(${getCardPosition(2).rotateY}deg)`,
+                opacity: getCardPosition(2).opacity,
+                zIndex: getCardPosition(2).isActive ? 10 : 1
               }}
             >
               <div className="service-card h-100 p-4 border rounded shadow-sm bg-light">
@@ -262,11 +291,11 @@ function App() {
 
             {/* Student Project Support Service */}
             <div 
-              className={`service-card-carousel ${pos4.isVisible ? 'active' : ''}`}
+              className={`service-card-carousel ${getCardPosition(3).isActive ? 'active' : ''}`}
               style={{ 
-                transform: `translate3d(${pos4.x}px, ${pos4.y}px, ${pos4.z || 0}px) scale(${pos4.scale || 1}) rotateY(${pos4.rotateY || 0}deg)`,
-                opacity: pos4.opacity || 1,
-                zIndex: pos4.isVisible ? 10 : 1
+                transform: `translate3d(${getCardPosition(3).x}px, ${getCardPosition(3).y}px, ${getCardPosition(3).z}px) scale(${getCardPosition(3).scale}) rotateY(${getCardPosition(3).rotateY}deg)`,
+                opacity: getCardPosition(3).opacity,
+                zIndex: getCardPosition(3).isActive ? 10 : 1
               }}
             >
               <div className="service-card h-100 p-4 border rounded shadow-sm bg-light">
@@ -284,11 +313,19 @@ function App() {
                 </p>
               </div>
             </div>
-              </div>
-            </div>
           </div>
 
-        
+          {/* Carousel Indicators */}
+          <div className="carousel-indicators mt-4">
+            {[0, 1, 2, 3].map((index) => (
+              <button
+                key={index}
+                className={`indicator ${currentIndex === index ? 'active' : ''}`}
+                onClick={() => goToSlide(index)}
+                aria-label={`Go to service ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
