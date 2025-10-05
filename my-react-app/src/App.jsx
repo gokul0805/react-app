@@ -1,5 +1,7 @@
 import './App.css';
 import logo from './assets/logo.jpg';
+import pcb from './assets/pcb.jpg';
+import esp from './assets/esp.jpg';
 import ScrollFadeIn from './ScrollFadeIn';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useState } from 'react';
@@ -251,7 +253,7 @@ function App() {
               <div className="service-card h-100 p-4 border rounded shadow-sm bg-light">
                 <div className="service-image mb-2">
                   <img 
-                    src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=200&h=150&fit=crop&crop=center" 
+                    src={pcb} 
                     alt="PCB Design" 
                     className="img-fluid rounded"
                     style={{ width: '100%', height: '80px', objectFit: 'cover' }}
@@ -276,7 +278,7 @@ function App() {
               <div className="service-card h-100 p-4 border rounded shadow-sm bg-light">
                 <div className="service-image mb-2">
                   <img 
-                    src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=200&h=150&fit=crop&crop=center" 
+                    src={esp}
                     alt="IoT Systems" 
                     className="img-fluid rounded"
                     style={{ width: '100%', height: '80px', objectFit: 'cover' }}
