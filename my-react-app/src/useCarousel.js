@@ -41,12 +41,34 @@ const useCarousel = (totalCards = 4, autoPlayInterval = 3000) => {
     setIsHovered(false);
   }, []);
 
+  // Dynamic radius based on screen width
+  const [radius, setRadius] = useState(250);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Use smaller radius for mobile devices
+      if (window.innerWidth < 576) {
+        setRadius(140);
+      } else if (window.innerWidth < 992) {
+        setRadius(200);
+      } else {
+        setRadius(250);
+      }
+    };
+
+    // Initial calculation
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Calculate card positions for 3D carousel effect
   const getCardPosition = useCallback((cardIndex) => {
-    const radius = 250; // Distance from center
+    // radius is now state-based
     const angleStep = 360 / totalCards; // Degrees between each card
     const currentRotation = currentIndex * angleStep;
-    
+
     // Calculate the angle for this specific card
     const cardAngle = (cardIndex * angleStep) - currentRotation;
     const radians = (cardAngle * Math.PI) / 180;
@@ -74,7 +96,7 @@ const useCarousel = (totalCards = 4, autoPlayInterval = 3000) => {
       isActive,
       rotateY,
     };
-  }, [currentIndex, totalCards]);
+  }, [currentIndex, totalCards, radius]);
 
   return {
     currentIndex,
